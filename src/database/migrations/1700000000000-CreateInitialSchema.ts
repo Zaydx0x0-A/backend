@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
-export class CreateUniversityStructure1700000000001 implements MigrationInterface {
+export class CreateInitialSchema1700000000000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     // ==================== UNIVERSITIES ====================
     await queryRunner.createTable(
       new Table({
         name: 'universities',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'name', type: 'varchar', length: '50', isNullable: false },
           { name: 'code', type: 'varchar', length: '10', isUnique: true, isNullable: false },
           { name: 'address', type: 'text', isNullable: true },
@@ -33,7 +35,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'establishment_types',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'name', type: 'varchar', length: '10', isNullable: false },
           { name: 'code', type: 'varchar', length: '10', isUnique: true, isNullable: false },
           { name: 'description', type: 'text', isNullable: true },
@@ -48,7 +50,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'establishments',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'name', type: 'varchar', length: '10', isNullable: false },
           { name: 'code', type: 'varchar', length: '10', isNullable: false },
           { name: 'type_id', type: 'uuid', isNullable: false },
@@ -70,7 +72,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'domains',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'name', type: 'varchar', length: '10', isNullable: false },
           { name: 'code', type: 'varchar', length: '10', isNullable: false },
           { name: 'establishment_id', type: 'uuid', isNullable: false },
@@ -89,7 +91,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'courses',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'name', type: 'varchar', length: '10', isNullable: false },
           { name: 'code', type: 'varchar', length: '10', isNullable: false },
           { name: 'domain_id', type: 'uuid', isNullable: false },
@@ -108,7 +110,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'course_levels',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'course_id', type: 'uuid', isNullable: false },
           { name: 'level', type: 'enum', enum: ['license', 'master', 'doctorat', 'engineering'], isNullable: false },
           { name: 'academic_year', type: 'varchar', length: '9', isNullable: false },
@@ -125,7 +127,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'users',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'email', type: 'varchar', length: '30', isUnique: true, isNullable: false },
           { name: 'password', type: 'varchar', length: '20', isNullable: false },
           { name: 'first_name', type: 'varchar', length: '10', isNullable: false },
@@ -146,7 +148,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'students',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'student_id', type: 'varchar', length: '10', isUnique: true, isNullable: false },
           { name: 'user_id', type: 'uuid', isNullable: false },
           { name: 'course_id', type: 'uuid', isNullable: false },
@@ -178,7 +180,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'student_cards',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'card_number', type: 'varchar', length: '6', isUnique: true, isNullable: false },
           { name: 'student_id', type: 'uuid', isNullable: false },
           { name: 'issue_date', type: 'date', isNullable: false },
@@ -199,7 +201,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'transactions',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'card_id', type: 'uuid', isNullable: false },
           { name: 'amount', type: 'decimal', precision: 10, scale: 2, isNullable: false },
           { name: 'transaction_type', type: 'enum', enum: ['payment', 'recharge', 'refund', 'withdrawal'], isNullable: false },
@@ -221,7 +223,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'establishment_directors',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'establishment_id', type: 'uuid', isNullable: false },
           { name: 'user_id', type: 'uuid', isNullable: false },
           { name: 'start_date', type: 'date', isNullable: true },
@@ -238,7 +240,7 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       new Table({
         name: 'services',
         columns: [
-          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+          { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid'},
           { name: 'name', type: 'varchar', length: '20', isNullable: false },
           { name: 'code', type: 'varchar', length: '10', isUnique: true, isNullable: false },
           { name: 'description', type: 'text', isNullable: true },
@@ -252,11 +254,28 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       true,
     );
 
+    // ==================== DONNÉES DE RÉFÉRENCE ====================
+    const facTypeId = uuidv4();
+    const ecoTypeId = uuidv4();
+    const insTypeId = uuidv4();
+
+    // Insérer les types d'établissements avec UUID générés côté application
+    await queryRunner.query(`
+      INSERT INTO establishment_types (id, name, code, description) VALUES
+      ('${facTypeId}', 'Faculté', 'FAC', 'Établissement universitaire de type faculté'),
+      ('${ecoTypeId}', 'École', 'ECO', 'Établissement universitaire de type école'),
+      ('${insTypeId}', 'Institut', 'INS', 'Établissement universitaire de type institut')
+      ON CONFLICT (code) DO NOTHING;
+    `);
+
+    console.log('✅ Reference data inserted successfully!');
+
     // ==================== FOREIGN KEYS ====================
     await queryRunner.createForeignKey('establishments', new TableForeignKey({ columnNames: ['university_id'], referencedColumnNames: ['id'], referencedTableName: 'universities', onDelete: 'CASCADE' }));
     await queryRunner.createForeignKey('establishments', new TableForeignKey({ columnNames: ['type_id'], referencedColumnNames: ['id'], referencedTableName: 'establishment_types', onDelete: 'RESTRICT' }));
     await queryRunner.createForeignKey('domains', new TableForeignKey({ columnNames: ['establishment_id'], referencedColumnNames: ['id'], referencedTableName: 'establishments', onDelete: 'CASCADE' }));
     await queryRunner.createForeignKey('courses', new TableForeignKey({ columnNames: ['domain_id'], referencedColumnNames: ['id'], referencedTableName: 'domains', onDelete: 'CASCADE' }));
+    await queryRunner.createForeignKey('course_levels', new TableForeignKey({ columnNames: ['course_id'], referencedColumnNames: ['id'], referencedTableName: 'courses', onDelete: 'CASCADE' }));
     await queryRunner.createForeignKey('students', new TableForeignKey({ columnNames: ['user_id'], referencedColumnNames: ['id'], referencedTableName: 'users', onDelete: 'CASCADE' }));
     await queryRunner.createForeignKey('students', new TableForeignKey({ columnNames: ['course_id'], referencedColumnNames: ['id'], referencedTableName: 'courses', onDelete: 'RESTRICT' }));
     await queryRunner.createForeignKey('student_cards', new TableForeignKey({ columnNames: ['student_id'], referencedColumnNames: ['id'], referencedTableName: 'students', onDelete: 'CASCADE' }));
@@ -270,22 +289,35 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
     await queryRunner.createIndex('establishments', new TableIndex({ name: 'IDX_ESTABLISHMENT_UNIVERSITY', columnNames: ['university_id'] }));
     await queryRunner.createIndex('domains', new TableIndex({ name: 'IDX_DOMAIN_ESTABLISHMENT', columnNames: ['establishment_id'] }));
     await queryRunner.createIndex('courses', new TableIndex({ name: 'IDX_COURSE_DOMAIN', columnNames: ['domain_id'] }));
+    await queryRunner.createIndex('course_levels', new TableIndex({ name: 'IDX_COURSE_LEVEL_COURSE', columnNames: ['course_id'] }));
     await queryRunner.createIndex('students', new TableIndex({ name: 'IDX_STUDENT_COURSE', columnNames: ['course_id'] }));
     await queryRunner.createIndex('students', new TableIndex({ name: 'IDX_STUDENT_STATUS', columnNames: ['status'] }));
     await queryRunner.createIndex('student_cards', new TableIndex({ name: 'IDX_CARD_STATUS', columnNames: ['status'] }));
     await queryRunner.createIndex('transactions', new TableIndex({ name: 'IDX_TRANSACTION_DATE', columnNames: ['transaction_date'] }));
-
-    // ==================== REFERENCE DATA ====================
-    await queryRunner.query(`
-      INSERT INTO establishment_types (id, name, code, description) VALUES
-      (uuid_generate_v4(), 'Faculté', 'FAC', 'Établissement universitaire de type faculté'),
-      (uuid_generate_v4(), 'École', 'ECO', 'Établissement universitaire de type école'),
-      (uuid_generate_v4(), 'Institut', 'INS', 'Établissement universitaire de type institut')
-      ON CONFLICT (code) DO NOTHING;
-    `);
+    await queryRunner.createIndex('establishment_directors', new TableIndex({ name: 'IDX_DIRECTOR_ESTABLISHMENT', columnNames: ['establishment_id'] }));
+    await queryRunner.createIndex('services', new TableIndex({ name: 'IDX_SERVICE_ESTABLISHMENT', columnNames: ['establishment_id'] }));
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    // Supprimer les clés étrangères d'abord
+    const foreignKeys = [
+      'establishments_university_id_fkey', 'establishments_type_id_fkey',
+      'domains_establishment_id_fkey', 'courses_domain_id_fkey',
+      'course_levels_course_id_fkey', 'students_user_id_fkey',
+      'students_course_id_fkey', 'student_cards_student_id_fkey',
+      'transactions_card_id_fkey', 'services_establishment_id_fkey',
+      'establishment_directors_establishment_id_fkey', 'establishment_directors_user_id_fkey'
+    ];
+
+    for (const fk of foreignKeys) {
+      try {
+        await queryRunner.dropForeignKey('establishments', fk);
+      } catch (error) {
+        // Ignorer si la clé n'existe pas
+      }
+    }
+
+    // Supprimer les tables dans l'ordre inverse
     await queryRunner.dropTable('transactions');
     await queryRunner.dropTable('student_cards');
     await queryRunner.dropTable('students');

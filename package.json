@@ -19,16 +19,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node ./node_modules/.bin/typeorm",
-    "migration:generate": "npm run typeorm -- migration:generate -d src/database/data-source.ts",
-    "migration:create-structure": "npm run typeorm -- migration:run -d src/database/data-source.ts",
-    "migration:run": "npm run typeorm -- migration:run -d src/database/data-source.ts",
-    "migration:revert-structure": "npm run typeorm -- migration:revert -d src/database/data-source.ts",
-    "migration:show": "npm run typeorm -- migration:show -d src/database/data-source.ts",
-    "schema:sync": "npm run typeorm -- schema:sync -d src/database/data-source.ts",
-    "schema:drop": "npm run typeorm -- schema:drop -d src/database/data-source.ts",
+    "migration:direct": "ts-node src/database/direct-migration.ts",
+    "migration:run": "ts-node src/database/direct-migration.ts",
+    "migration:create-structure": "ts-node src/database/direct-migration.ts",
     "db:seed": "ts-node src/database/seeds/run-seeds.ts",
-    "db:reset": "npm run schema:drop && npm run migration:run && npm run db:seed",
-    "db:test": "npm run migration:run && npm run db:seed"
+    "db:reset": "npm run migration:run && npm run db:seed"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
@@ -111,6 +106,7 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "typeorm-ts-node-commonjs": "^0.3.20",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },
