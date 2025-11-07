@@ -26,8 +26,9 @@
     "migration:show": "npm run typeorm -- migration:show -d src/database/data-source.ts",
     "schema:sync": "npm run typeorm -- schema:sync -d src/database/data-source.ts",
     "schema:drop": "npm run typeorm -- schema:drop -d src/database/data-source.ts",
-    "db:reset": "npm run schema:drop && npm run migration:run",
-    "db:seed": "ts-node src/database/seeds/run-seeds.ts"
+    "db:seed": "ts-node src/database/seeds/run-seeds.ts",
+    "db:reset": "npm run schema:drop && npm run migration:run && npm run db:seed",
+    "db:test": "npm run migration:run && npm run db:seed"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
