@@ -179,12 +179,6 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
             isNullable: true,
           },
           {
-            name: 'dean_director_name',
-            type: 'varchar',
-            length: '255',
-            isNullable: true,
-          },
-          {
             name: 'contact_email',
             type: 'varchar',
             length: '255',
@@ -223,140 +217,58 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
 
     // Table des domaines/mentions
     await queryRunner.createTable(
-      new Table({
-        name: 'domains',
-        columns: [
-          {
-            name: 'id',
-            type: 'uuid',
-            isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'name',
-            type: 'varchar',
-            length: '255',
-            isNullable: false,
-          },
-          {
-            name: 'code',
-            type: 'varchar',
-            length: '50',
-            isNullable: false,
-          },
-          {
-            name: 'establishment_id',
-            type: 'uuid',
-            isNullable: false,
-          },
-          {
-            name: 'description',
-            type: 'text',
-            isNullable: true,
-          },
-          {
-            name: 'duration_years',
-            type: 'integer',
-            default: 3,
-          },
-          {
-            name: 'level',
-            type: 'enum',
-            enum: ['license', 'master', 'doctorat', 'engineering'],
-            default: "'license'",
-          },
-          {
-            name: 'is_active',
-            type: 'boolean',
-            default: true,
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-        ],
-      }),
-      true,
-    );
+  new Table({
+    name: 'domains',
+    columns: [
+      { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+      { name: 'name', type: 'varchar', length: '255', isNullable: false },
+      { name: 'code', type: 'varchar', length: '50', isNullable: false },
+      { name: 'establishment_id', type: 'uuid', isNullable: false },
+      { name: 'description', type: 'text', isNullable: true },
+      { name: 'duration_years', type: 'integer', default: 3 }, // durée par défaut
+      { name: 'is_active', type: 'boolean', default: true },
+      { name: 'created_at', type: 'timestamp', default: 'now()' },
+      { name: 'updated_at', type: 'timestamp', default: 'now()' },
+    ],
+  }),
+  true,
+);
 
-    // Table des parcours/spécialités
-    await queryRunner.createTable(
-      new Table({
-        name: 'courses',
-        columns: [
-          {
-            name: 'id',
-            type: 'uuid',
-            isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'name',
-            type: 'varchar',
-            length: '255',
-            isNullable: false,
-          },
-          {
-            name: 'code',
-            type: 'varchar',
-            length: '50',
-            isNullable: false,
-          },
-          {
-            name: 'domain_id',
-            type: 'uuid',
-            isNullable: false,
-          },
-          {
-            name: 'description',
-            type: 'text',
-            isNullable: true,
-          },
-          {
-            name: 'credits_required',
-            type: 'integer',
-            default: 180,
-          },
-          {
-            name: 'tuition_fee',
-            type: 'decimal',
-            precision: 10,
-            scale: 2,
-            default: 0,
-          },
-          {
-            name: 'academic_year',
-            type: 'varchar',
-            length: '9',
-            isNullable: false, // Format: 2024-2025
-          },
-          {
-            name: 'is_active',
-            type: 'boolean',
-            default: true,
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-        ],
-      }),
-      true,
-    );
+
+await queryRunner.createTable(
+  new Table({
+    name: 'courses',
+    columns: [
+      { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+      { name: 'name', type: 'varchar', length: '255', isNullable: false },
+      { name: 'code', type: 'varchar', length: '50', isNullable: false },
+      { name: 'domain_id', type: 'uuid', isNullable: false },
+      { name: 'description', type: 'text', isNullable: true },
+      { name: 'tuition_fee', type: 'decimal', precision: 10, scale: 2, default: 0 },
+      { name: 'is_active', type: 'boolean', default: true },
+      { name: 'created_at', type: 'timestamp', default: 'now()' },
+      { name: 'updated_at', type: 'timestamp', default: 'now()' },
+    ],
+  }),
+  true,
+);
+
+
+await queryRunner.createTable(
+  new Table({
+    name: 'course_levels',
+    columns: [
+      { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+      { name: 'course_id', type: 'uuid', isNullable: false },  // lien vers parcours
+      { name: 'level', type: 'enum', enum: ['license', 'master', 'doctorat', 'engineering'], isNullable: false },
+      { name: 'academic_year', type: 'varchar', length: '9', isNullable: false }, // ex: 2024-2025
+      { name: 'credits_required', type: 'integer', default: 60 },
+      { name: 'created_at', type: 'timestamp', default: 'now()' },
+      { name: 'updated_at', type: 'timestamp', default: 'now()' },
+    ],
+  }),
+  true,
+);
 
     // Table des utilisateurs (inchangée mais incluse pour complétude)
     await queryRunner.createTable(
@@ -721,6 +633,24 @@ export class CreateUniversityStructure1700000000001 implements MigrationInterfac
       }),
       true,
     );
+
+    // Table liaison establishment <-> user (doyen/directeur)
+await queryRunner.createTable(
+  new Table({
+    name: 'establishment_directors',
+    columns: [
+      { name: 'id', type: 'uuid', isPrimary: true, generationStrategy: 'uuid', default: 'uuid_generate_v4()' },
+      { name: 'establishment_id', type: 'uuid', isNullable: false },
+      { name: 'user_id', type: 'uuid', isNullable: false },
+      { name: 'start_date', type: 'date', isNullable: true },
+      { name: 'end_date', type: 'date', isNullable: true },
+      { name: 'created_at', type: 'timestamp', default: 'now()' },
+      { name: 'updated_at', type: 'timestamp', default: 'now()' },
+    ],
+  }),
+  true,
+);
+
 
     // Table des services (par établissement)
     await queryRunner.createTable(
